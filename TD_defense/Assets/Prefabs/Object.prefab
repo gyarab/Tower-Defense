@@ -156,6 +156,7 @@ MonoBehaviour:
   PathToFollow: {fileID: 2088481118063695012, guid: 28fd34fa9dcb65543ba237d55dde587d,
     type: 3}
   CurrenWayPointID: 0
-  speed: 6
+  speed: 2
   rotationspeed: 5
   pathName: 
+  HP: 50

@@ -606,7 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkpoints:
   - {fileID: 2283612541913506164}
-  SpawnTime: 0.5
+  SpawnTime: 2
   num: 1
   currentUnits: 0
   deathUnits: 0

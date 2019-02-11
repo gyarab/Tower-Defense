@@ -5,22 +5,75 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
 
+    public float damage = 10f;
+    public float AttackPerSec = 1f;
+    bool firing = false;
+
+
+    private List<Collider> colliders = new List<Collider>();
+    
+
+
+    private void OnTriggerEnter(Collider enemy)
+    {
+        if (!colliders.Contains(enemy))
+        {
+            colliders.Add(enemy);
+
+          
+
+                    
+                
+                
+            
+
+    
+
+        }
+    }
+    private void OnTriggerExit(Collider enemy)
+    {
+        colliders.Remove(enemy);
+       
+        
+    }
+
+    private void Fire(Collider collider)
+    {
+        MoveOnPath target = collider.GetComponentInParent<MoveOnPath>();
+        if (target.HP <= damage)
+        {
+            colliders.Remove(collider);
+        }
+        target.HP -= damage;
+        
+
+    }
+
+    IEnumerator Delay()
+    {
+        Fire(colliders[1]);
+        yield return new WaitForSeconds(1 / AttackPerSec);
+        firing = false;
+
+        
+    }
 
 
 
-
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        if (colliders.Count >= 2 && firing == false)
+        {
+            firing = true;
+            StartCoroutine(Delay());
+        }
+       
     }
 }
