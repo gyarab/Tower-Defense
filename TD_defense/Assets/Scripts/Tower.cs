@@ -4,76 +4,120 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-
+    public Transform target;
     public float damage = 10f;
     public float AttackPerSec = 1f;
-    bool firing = false;
-
-
-    private List<Collider> colliders = new List<Collider>();
+    private bool firing = false;
+    public float range = 7f;
+    public string enemyTag = "Enemy";
     
 
 
-    private void OnTriggerEnter(Collider enemy)
+
+    private void Start()
     {
-        if (!colliders.Contains(enemy))
+        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+    }
+
+
+
+    // zamerovani
+    void UpdateTarget()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        float shortestDistance = range;
+        GameObject nearestEnemy = null;
+        
+
+        foreach (GameObject enemy in enemies)
         {
-            colliders.Add(enemy);
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < shortestDistance)
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+        }
 
-          
+        if (nearestEnemy != null && shortestDistance <= range)
+        {
+            if (target == null)
+            {
+                target = nearestEnemy.transform;
+            }
 
-                    
-                
-                
+            else if (Vector3.Distance(transform.position, target.transform.position) > range)
+            {
+                target = nearestEnemy.transform;
+            }
             
-
-    
-
+            
         }
-    }
-    private void OnTriggerExit(Collider enemy)
-    {
-        colliders.Remove(enemy);
-       
-        
-    }
-
-    private void Fire(Collider collider)
-    {
-        MoveOnPath target = collider.GetComponentInParent<MoveOnPath>();
-        if (target.HP <= damage)
+        else
         {
-            colliders.Remove(collider);
+            target = null;
         }
-        target.HP -= damage;
-        
 
     }
 
-    IEnumerator Delay()
+
+    //akce kazdy per frame
+    private void Update()
     {
-        Fire(colliders[1]);
+        if (target == null)
+            return;
+       else if (firing == false)
+        {
+            firing = true;
+            StartCoroutine(Delay(target));
+        }
+
+    }
+
+
+    // casovac strelby
+    IEnumerator Delay(Transform enemy)
+    {
+        Fire(enemy);
         yield return new WaitForSeconds(1 / AttackPerSec);
         firing = false;
 
-        
+
     }
 
 
 
-    void Start()
+
+    //graficke zobrazeni range veze v editoru
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 
-    
-    void Update()
+    // strelba
+    private void Fire(Transform enemyGameobject)
     {
-        if (colliders.Count >= 2 && firing == false)
-        {
-            firing = true;
-            StartCoroutine(Delay());
-        }
-       
+        MoveOnPath target = enemyGameobject.GetComponentInParent<MoveOnPath>();
+        target.HP -= damage;
+
+
     }
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
