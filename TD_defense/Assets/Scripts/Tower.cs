@@ -9,6 +9,7 @@ public class Tower : MonoBehaviour
     public float AttackPerSec = 1f;
     private bool firing = false;
     public float range = 7f;
+    public float cost = 2f;
     public string enemyTag = "Enemy";
 
     public GameObject bullet;
@@ -23,7 +24,7 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
-        bullet = (Resources.Load("Bullet")) as GameObject;
+        
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 

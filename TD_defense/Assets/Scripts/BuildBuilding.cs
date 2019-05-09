@@ -12,9 +12,11 @@ public class BuildBuilding : MonoBehaviour
     public float PosX;
     public float PosY;
     public float PosZ;
+
+    public bool PlaneCanvas = false;
     
-    public Color rayColor = Color.white;
-    GameObject tower;
+   
+    
     public GameObject plane;
 
     public void Start()
@@ -24,32 +26,17 @@ public class BuildBuilding : MonoBehaviour
 
         ui = camera.GetComponent<UI>();
 
-        
-
-
-
-
-
-         tower = (Resources.Load("War_Tower")) as GameObject;
-        if (tower != null)
-        {
-            Debug.Log("je to tam");
-        }
-
-        else
-        {
-            Debug.Log("nope neni to tam");
-        }
-
+    
     }
 
-    void OnDrawGizmos()
+    IEnumerator Delay()
     {
-        Gizmos.color = rayColor;
+        
+        yield return new WaitForSeconds(0.1f);
+        ui.BuildNode.SetActive(false);
+        PlaneCanvas = false;
+
     }
-
-
-  
 
 
 
@@ -59,15 +46,15 @@ public class BuildBuilding : MonoBehaviour
         {   
             Ray toMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit rhinfo;
-            bool didHit = Physics.Raycast(toMouse, out rhinfo);
+            
+            float raylenght = Mathf.Infinity;
+            bool didHit = Physics.Raycast(toMouse, out rhinfo, raylenght);
+            
 
             if (didHit)
             {
-                if (rhinfo.transform.name == "BuildTowerText")
-                {
-                    Debug.Log("Trefa");
-                }
-
+                
+                
                 if (rhinfo.collider.name == "Plane")
                 {
                      plane = rhinfo.collider.gameObject;
@@ -78,22 +65,21 @@ public class BuildBuilding : MonoBehaviour
                     ui.BuildNode.transform.position = new Vector3(PosX, PosY, PosZ);
                     ui.BuildNode.SetActive(true);
 
+                    PlaneCanvas = true;
 
-                   // build.build(tower, PosX, PosY, PosZ);
-                   
-                   // rhinfo.collider.gameObject.SetActive(false);
-                    
+
+                                      
                 }
-                else
+                else if (PlaneCanvas)
                 {
+                   StartCoroutine(Delay());
                     
                 }
-                Debug.Log(rhinfo.transform.name + "  " + rhinfo.point);
+
+               
+                
             }
-            else
-            {
-                Debug.Log("emptyspace");
-            }
+            
 
         }
     }

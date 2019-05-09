@@ -6,10 +6,8 @@ public class MoveOnPath : MonoBehaviour
 
    {
     public EditorPath PathToFollow;
+    private UI ui;
    
-
-
-    
 
 
     public int CurrenWayPointID = 0;
@@ -18,6 +16,7 @@ public class MoveOnPath : MonoBehaviour
     public float rotationspeed = 5.0f;
     public string pathName;
     public float HP = 50f;
+    public float cost = 5;
     
   
 
@@ -31,7 +30,11 @@ public class MoveOnPath : MonoBehaviour
   
     void Start()
     {
-        
+
+        GameObject camera = new GameObject();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        ui = camera.GetComponent<UI>();
 
         last_position = transform.position;
     }
@@ -50,19 +53,10 @@ public class MoveOnPath : MonoBehaviour
             CurrenWayPointID++;
         }
 
-        if (CurrenWayPointID >= PathToFollow.path_objs.Count)
-        {
-
-            
-            
-          //  Destroy(this.gameObject);
-            
-
-            
-            
-        }
+       
         if (HP <= 0)
         {
+            ui.Money = ui.Money + cost;
             Destroy(this.gameObject);
 ;        }
     }

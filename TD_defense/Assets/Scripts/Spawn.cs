@@ -18,6 +18,7 @@ public class Spawn : MonoBehaviour
     public float nextWave = 15.0f;
 
     private GameObject animal;
+    private GameObject m;
     
 
 
@@ -28,7 +29,7 @@ public class Spawn : MonoBehaviour
     void Start()
     {
         
-        animal = Resources.Load("Animal") as GameObject;
+        animal = Resources.Load("Units/Animal") as GameObject;
 
         arrayPoints = GetComponentsInChildren<Transform>();
 
@@ -39,7 +40,7 @@ public class Spawn : MonoBehaviour
                 checkpoints.Add(path_obj);
                 
 
-                if (checkpoints.Count == arrayPoints.Length)
+                if (checkpoints.Count == arrayPoints.Length - 1)
                 {
                     AddCollider(path_obj.gameObject);
 
@@ -69,7 +70,7 @@ public class Spawn : MonoBehaviour
 
         if (num)
         {
-            GameObject m = animal;
+            m = animal;
 
            
             int spawnIndex = 0;
@@ -94,6 +95,7 @@ public class Spawn : MonoBehaviour
             num = true;
         }
     }
+
     void AddCollider(GameObject obj)
     {
         float scale = 1.3f;

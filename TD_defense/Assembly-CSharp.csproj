@@ -64,19 +64,14 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\BuildBuilding.cs" />
-    <Compile Include="Assets\Scripts\BuildingManager.cs" />
     <Compile Include="Assets\Scripts\BuildingPlace.cs" />
-    <Compile Include="Assets\Scripts\BuildingPlacement.cs" />
     <Compile Include="Assets\Scripts\Despawn.cs" />
     <Compile Include="Assets\Scripts\EditorPath.cs" />
     <Compile Include="Assets\Scripts\GetPath.cs" />
-    <Compile Include="Assets\Scripts\GunScript.cs" />
     <Compile Include="Assets\Scripts\MoveOnPath.cs" />
     <Compile Include="Assets\Scripts\Shot.cs" />
     <Compile Include="Assets\Scripts\Spawn.cs" />
-    <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\Tower.cs" />
-    <Compile Include="Assets\Scripts\Tower1.cs" />
     <Compile Include="Assets\Scripts\UI.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Programovani/Unity/Rocnikovka_TD_def/TD_defense/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
