@@ -9,7 +9,7 @@ public class UI : MonoBehaviour
     public float Money = 10;
     public float Lives = 10;
 
-    GameObject[] EmptyObjects;
+   
 
 
     private BuildBuilding build;
@@ -76,8 +76,8 @@ public class UI : MonoBehaviour
 
     Font ArialFont;
 
+   
 
-    
 
     void buildTower(GameObject prefab, float PosX, float PosY, float PosZ)
     {
@@ -91,6 +91,7 @@ public class UI : MonoBehaviour
         else
         {
             BuildNode.SetActive(true);
+            build.PlaneCanvasclicked = true;
         }
         
     }
@@ -465,10 +466,26 @@ public class UI : MonoBehaviour
 
     }
 
+    public void DestroyNewGameObjects()
+    {
+        GameObject[] GameObjects = (FindObjectsOfType<GameObject>() as GameObject[]);
+
+        foreach (GameObject EmptyObject in GameObjects)
+        {
+            if (EmptyObject.name == "New Game Object")
+            {
+                Destroy(EmptyObject);
+            }
+        }
+    }
+
     private void Update()
     {
         TopPanelCoinCountCash.GetComponent<Text>().text = Money.ToString();
         TopPanelLifeNummber.GetComponent<Text>().text = Lives.ToString();
+
+
+        DestroyNewGameObjects();
 
 
     }

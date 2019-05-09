@@ -13,7 +13,7 @@ public class BuildBuilding : MonoBehaviour
     public float PosY;
     public float PosZ;
 
-    public bool PlaneCanvas = false;
+    public bool PlaneCanvasclicked = false;
     
    
     
@@ -31,11 +31,17 @@ public class BuildBuilding : MonoBehaviour
 
     IEnumerator Delay()
     {
-        
-        yield return new WaitForSeconds(0.1f);
-        ui.BuildNode.SetActive(false);
-        PlaneCanvas = false;
 
+        yield return new WaitForSeconds(0.2f);
+        if (PlaneCanvasclicked)
+        {
+            ui.BuildNode.SetActive(true);
+        }
+        else
+        {
+            ui.BuildNode.SetActive(false);
+        }
+      
     }
 
 
@@ -65,16 +71,22 @@ public class BuildBuilding : MonoBehaviour
                     ui.BuildNode.transform.position = new Vector3(PosX, PosY, PosZ);
                     ui.BuildNode.SetActive(true);
 
-                    PlaneCanvas = true;
-
-
-                                      
+                    PlaneCanvasclicked = true;
+                 
                 }
-                else if (PlaneCanvas)
+                else 
                 {
-                   StartCoroutine(Delay());
+                    
+                    PlaneCanvasclicked = false;
                     
                 }
+
+                if (PlaneCanvasclicked == false)
+                {
+                    StartCoroutine(Delay());
+                    
+                }
+                 
 
                
                 
